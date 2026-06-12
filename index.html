@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NinjaWin | Win Smart. Win Big.</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #FFFFFF;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, #0A0F0A 0%, #050505 100%);
+            z-index: -2;
+        }
+        
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 22s infinite alternate;
+        }
+        
+        .orb1 {
+            width: 50vw;
+            height: 50vw;
+            background: #00E676;
+            top: -20%;
+            left: -15%;
+        }
+        
+        .orb2 {
+            width: 40vw;
+            height: 40vw;
+            background: #39FF14;
+            bottom: -10%;
+            right: -20%;
+            animation-duration: 28s;
+        }
+        
+        .orb3 {
+            width: 30vw;
+            height: 30vw;
+            background: #00C853;
+            top: 50%;
+            left: 60%;
+            animation-duration: 18s;
+            opacity: 0.2;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(50px, -40px) scale(1.15);
+            }
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+        }
+        
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 230, 118, 0.3);
+            padding: 18px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #00E676);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: #39FF14;
+            text-shadow: 0 0 8px #00E676;
+        }
+        
+        .btn-glow {
+            background: linear-gradient(95deg, #00E676, #00C853);
+            padding: 8px 28px;
+            border-radius: 40px;
+            color: #050505 !important;
+            font-weight: 700;
+            box-shadow: 0 0 12px #00E676;
+            transition: all 0.3s;
+        }
+        
+        .btn-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 24px #39FF14;
+        }
+        
+        .menu-icon {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #00E676;
+        }
+        
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 75px;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.98);
+                backdrop-filter: blur(24px);
+                flex-direction: column;
+                padding: 50px 30px;
+                transition: 0.3s;
+                gap: 40px;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .menu-icon {
+                display: block;
+            }
+        }
+        
+        .btn-primary,
+        .btn-outline {
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: #00E676;
+            color: #050505;
+            box-shadow: 0 0 15px #00E676;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background: #39FF14;
+            box-shadow: 0 0 28px #39FF14;
+        }
+        
+        .btn-outline {
+            border: 1.5px solid #00E676;
+            color: #00E676;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 230, 118, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            background: linear-gradient(120deg, #fff, #00E676);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card-grid,
+        .step-grid,
+        .testimonial-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .card {
+            background: rgba(16, 16, 16, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid rgba(0, 230, 118, 0.25);
+            transition: all 0.4s;
+            width: 280px;
+        }
+        
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: #00E676;
+            box-shadow: 0 25px 35px -12px rgba(0, 230, 118, 0.3);
+        }
+        
+        .card i {
+            font-size: 2.8rem;
+            color: #00E676;
+            margin-bottom: 20px;
+        }
+        
+        .feed-glass {
+            background: rgba(10, 15, 10, 0.5);
+            backdrop-filter: blur(14px);
+            border-radius: 36px;
+            padding: 32px;
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+        
+        .comment-item {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #00E676;
+        }
+        
+        .comment-name {
+            font-weight: 700;
+            color: #00E676;
+        }
+        
+        .reply-box {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .reply-box input {
+            flex: 1;
+            background: #1a1f1a;
+            border: 1px solid #00E676;
+            border-radius: 40px;
+            padding: 10px 18px;
+            color: white;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .input-group input,
+        .input-group textarea {
+            background: #1a1f1a;
+            border: 1px solid #00E676;
+            border-radius: 32px;
+            padding: 14px 20px;
+            color: white;
+            flex: 1;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 30px 40px;
+            text-align: center;
+            min-width: 180px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #39FF14;
+            text-shadow: 0 0 10px #00E676;
+        }
+        
+        .faq-item {
+            background: rgba(16, 16, 16, 0.6);
+            margin-bottom: 16px;
+            border-radius: 28px;
+            padding: 20px 28px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.3s;
+            color: #ccc;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 150px;
+            margin-top: 12px;
+        }
+        
+        footer {
+            border-top: 1px solid rgba(0, 230, 118, 0.2);
+            padding: 50px 0 30px;
+            margin-top: 40px;
+        }
+        
+        .social-icons i {
+            font-size: 1.6rem;
+            margin: 0 12px;
+            transition: 0.2s;
+            color: #ccc;
+            cursor: pointer;
+        }
+        
+        .social-icons i:hover {
+            color: #00E676;
+            transform: translateY(-4px);
+        }
+        
+        .fade-up {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: 0.8s;
+        }
+        
+        .fade-up.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: #1a1f1a;
+            border: 1px solid #00E676;
+            border-radius: 32px;
+            padding: 16px 22px;
+            margin-bottom: 18px;
+            color: white;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00E676;
+            color: #050505;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <h1>NinjaWin</h1>
+            </div>
+            <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Home</a><a href="#features">Features</a><a href="#community">Community</a>
+                <a href="#how">How It Works</a><a href="#contact">Contact</a>
+                <a href="admin.html" class="btn-glow"><i class="fas fa-shield-alt"></i> Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" style="padding: 100px 0 80px; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: clamp(3rem,8vw,5.5rem); font-weight:800; letter-spacing:-0.02em;">WIN SMART.<br>WIN BIG.</h1>
+                <p style="font-size:1.2rem; max-width:650px; margin:24px auto; color:#ccc;">Join premium product campaigns and stand a chance to win smartphones, laptops, gaming consoles, gadgets and more.</p>
+                <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+                    <a href="#community" class="btn-primary"><i class="fas fa-users"></i> Join Community</a>
+                    <a href="#features" class="btn-outline">Explore Features</a>
+                </div>
+                <div style="margin-top:60px; display:flex; justify-content:center; gap:45px; flex-wrap:wrap;">
+                    <div><span style="color:#00E676; font-weight:800; font-size:1.5rem;">10K+</span> Members</div>
+                    <div><span style="color:#00E676; font-weight:800; font-size:1.5rem;">25+</span> Campaigns</div>
+                    <div><span style="color:#00E676; font-weight:800; font-size:1.5rem;">100%</span> Fair Play</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title fade-up">Premium Platform Features</h2>
+                <div class="card-grid">
+                    <div class="card fade-up"><i class="fas fa-balance-scale"></i>
+                        <h3>Fair Participation</h3>
+                        <p>Cryptographically fair random winner selection.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-gem"></i>
+                        <h3>Product Campaigns</h3>
+                        <p>Smartphones, Laptops, Gaming gear & more.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-shield-alt"></i>
+                        <h3>Secure System</h3>
+                        <p>Supabase Auth + realtime security.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-comments"></i>
+                        <h3>Community Hub</h3>
+                        <p>Live discussions, replies & announcements.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-chart-line"></i>
+                        <h3>Transparent Draws</h3>
+                        <p>Verifiable winner selection logic.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-bell"></i>
+                        <h3>Real-time Updates</h3>
+                        <p>Instant notifications via Supabase.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how">
+            <div class="container">
+                <h2 class="section-title fade-up">How It Works</h2>
+                <div class="step-grid">
+                    <div class="card fade-up"><i class="fas fa-user-check"></i>
+                        <h4>1. Join Platform</h4>
+                        <p>Sign up with email (coming soon).</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-tasks"></i>
+                        <h4>2. Select Campaign</h4>
+                        <p>Browse active product campaigns.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-ticket-alt"></i>
+                        <h4>3. Participate</h4>
+                        <p>Enter the draw with one click.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-random"></i>
+                        <h4>4. Fair Selection</h4>
+                        <p>System picks winners randomly.</p>
+                    </div>
+                    <div class="card fade-up"><i class="fas fa-truck"></i>
+                        <h4>5. Get Delivered</h4>
+                        <p>Product ships to your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="community">
+            <div class="container">
+                <h2 class="section-title fade-up">Community Hub 🔥</h2>
+                <div class="feed-glass">
+                    <div class="input-group">
+                        <input type="text" id="commentName" placeholder="Your name">
+                        <textarea id="commentMsg" rows="1" placeholder="Share your thoughts..."></textarea>
+                        <button id="postCommentBtn" class="btn-primary" style="padding:0 28px;">Post <i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <div id="commentsList">Loading community feed...</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2 class="section-title fade-up">Live Platform Stats</h2>
+                <div class="card-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="8450">0</div>
+                        <p>Community Members</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="12750">0</div>
+                        <p>Total Comments</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="12">0</div>
+                        <p>Active Campaigns</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="1540">0</div>
+                        <p>Products Won</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2 class="section-title fade-up">Success Stories</h2>
+                <div class="testimonial-grid">
+                    <div class="card"><i class="fas fa-star" style="color:#FFD966;"></i>
+                        <p>"Won an iPhone 15 Pro! The process was transparent and fast."</p>
+                        <h4>- Tolu A.</h4>
+                    </div>
+                    <div class="card"><i class="fas fa-star" style="color:#FFD966;"></i>
+                        <p>"NinjaWin is revolutionary. Community is amazing!"</p>
+                        <h4>- Sandra O.</h4>
+                    </div>
+                    <div class="card"><i class="fas fa-star" style="color:#FFD966;"></i>
+                        <p>"Legit platform, received my gaming laptop in 5 days."</p>
+                        <h4>- David E.</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2 class="section-title fade-up">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">How are winners selected? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Using a cryptographically secure pseudo-random algorithm ensuring complete fairness.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is there any fee to participate? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Currently 100% free. Premium campaigns may come later.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I know the draws are fair? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">All draws are logged and can be audited via Supabase logs.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-title fade-up">Contact Us</h2>
+                <div style="max-width:600px; margin:0 auto;">
+                    <div class="contact-form">
+                        <input type="text" id="contactName" placeholder="Full Name">
+                        <input type="email" id="contactEmail" placeholder="Email Address">
+                        <textarea id="contactMsg" rows="3" placeholder="Your message..."></textarea>
+                        <button id="sendMsgBtn" class="btn-primary" style="width:100%;">Send Message <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div style="background:linear-gradient(145deg,#0A0F0A,#050505); border-radius:70px; padding:70px 30px; text-align:center; border:1px solid #00E676; margin:30px 0;">
+                    <h2 style="font-size:2.5rem;">Ready To Join NinjaWin?</h2>
+                    <p style="margin:20px 0;">Become part of the future of product rewards.</p>
+                    <a href="#community" class="btn-primary" style="padding:16px 48px;">Join Community <i class="fas fa-rocket"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+                <div>
+                    <h2 style="font-size:1.8rem;">NinjaWin</h2>
+                    <p style="color:#aaa;">Powered by ZerøByte<br>Built by Codex Tech Foundation | 2026</p>
+                </div>
+                <div class="social-icons"><i class="fab fa-facebook"></i><i class="fab fa-instagram"></i><i class="fab fa-telegram"></i><i class="fab fa-twitter"></i></div>
+            </div>
+            <div style="text-align:center; margin-top:40px;">© 2026 NinjaWin. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- Load Supabase and initialize -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Wait for everything to load
+        (function() {
+                console.log("🚀 Script starting...");
+
+                // Your Supabase credentials
+                const SUPABASE_URL = "https://udceaaccnnsgwsnntkfs.supabase.co";
+                const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkY2VhYWNjbm5zZ3dzbm50a2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMDU0ODcsImV4cCI6MjA5Njc4MTQ4N30.ZO04OY28I9gg0apVBbEwPc_gFa26jMTlOR8KMp2KZjg";
+
+                // Check if supabase is available
+                let supabaseClient = null;
+
+                // Wait for supabase to be ready
+                function initSupabase() {
+                    if (typeof supabase !== 'undefined' && supabase.createClient) {
+                        console.log("✅ Supabase library found!");
+                        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                        console.log("✅ Supabase client created!");
+                        startApp();
+                    } else {
+                        console.log("⏳ Waiting for Supabase library...");
+                        setTimeout(initSupabase, 100);
+                    }
+                }
+
+                function showToast(message, isError) {
+                    const toast = document.getElementById('toast');
+                    toast.textContent = message;
+                    if (isError) {
+                        toast.style.backgroundColor = '#dc2626';
+                        toast.style.color = '#fff';
+                    } else {
+                        toast.style.backgroundColor = '#00E676';
+                        toast.style.color = '#050505';
+                    }
+                    toast.style.display = 'block';
+                    setTimeout(() => {
+                        toast.style.display = 'none';
+                    }, 3000);
+                }
+
+                function escapeHtml(str) {
+                    if (!str) return '';
+                    return str.replace(/[&<>]/g, function(m) {
+                        if (m === '&') return '&amp;';
+                        if (m === '<') return '&lt;';
+                        if (m === '>') return '&gt;';
+                        return m;
+                    });
+                }
+
+                async function loadCommunityFeed() {
+                    if (!supabaseClient) return;
+                    try {
+                        const {
+                            data: comments,
+                            error
+                        } = await supabaseClient
+                            .from('comments')
+                            .select('*')
+                            .order('pinned', {
+                                ascending: false
+                            })
+                            .order('created_at', {
+                                ascending: false
+                            });
+
+                        if (error) {
+                            console.error("Error loading comments:", error);
+                            document.getElementById('commentsList').innerHTML = '⚠️ Error loading comments. Make sure tables exist.';
+                            return;
+                        }
+
+                        if (!comments || comments.length === 0) {
+                            document.getElementById('commentsList').innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+                            return;
+                        }
+
+                        const mainComments = comments.filter(c => !c.parent_id);
+                        const repliesMap = {};
+                        comments.forEach(c => {
+                            if (c.parent_id) {
+                                if (!repliesMap[c.parent_id]) repliesMap[c.parent_id] = [];
+                                repliesMap[c.parent_id].push(c);
+                            }
+                        });
+
+                        let html = '';
+                        for (let i = 0; i < mainComments.length; i++) {
+                            const comment = mainComments[i];
+                            html += `
+                            <div class="comment-item">
+                                <div><span class="comment-name">${escapeHtml(comment.name)} ${comment.pinned ? '📌' : ''}</span> <span style="font-size:12px; color:#aaa;">${new Date(comment.created_at).toLocaleString()}</span></div>
+                                <div style="margin:12px 0;">${escapeHtml(comment.text)}</div>
+                                <div><button class="reply-toggle-${comment.id}" style="background:none; border:none; color:#00E676; cursor:pointer;"><i class="fas fa-reply"></i> Reply</button></div>
+                                <div id="replies-${comment.id}" style="margin-left:35px; margin-top:12px;">
+                                    ${(repliesMap[comment.id] || []).map(rep => `<div style="background:#0A0F0A; padding:10px; border-radius:16px; margin-bottom:8px;"><strong>${escapeHtml(rep.name)}</strong>: ${escapeHtml(rep.text)}</div>`).join('')}
+                                    <div id="reply-input-${comment.id}" style="display:none; margin-top:12px;" class="reply-box">
+                                        <input type="text" id="replyName-${comment.id}" placeholder="Your name">
+                                        <input type="text" id="replyText-${comment.id}" placeholder="Write a reply...">
+                                        <button onclick="window.submitReply('${comment.id}')" class="btn-primary" style="padding:8px 20px;">Reply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    document.getElementById('commentsList').innerHTML = html;
+                    
+                    // Add event listeners
+                    for (let i = 0; i < mainComments.length; i++) {
+                        const comment = mainComments[i];
+                        const btn = document.querySelector(`.reply-toggle-${comment.id}`);
+                        if (btn) {
+                            btn.addEventListener('click', () => {
+                                const inputDiv = document.getElementById(`reply-input-${comment.id}`);
+                                if (inputDiv) inputDiv.style.display = inputDiv.style.display === 'none' ? 'flex' : 'none';
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.error("Load community feed error:", e);
+                    document.getElementById('commentsList').innerHTML = '⚠️ Error connecting to Supabase.';
+                }
+            }
+            
+            window.submitReply = async (parentId) => {
+                const name = document.getElementById(`replyName-${parentId}`).value.trim() || "Guest";
+                const text = document.getElementById(`replyText-${parentId}`).value.trim();
+                if (!text) {
+                    showToast("Write a reply", true);
+                    return;
+                }
+                try {
+                    await supabaseClient.from('comments').insert([{ 
+                        name: name, 
+                        text: text, 
+                        parent_id: parentId, 
+                        created_at: new Date(), 
+                        pinned: false 
+                    }]);
+                    document.getElementById(`replyText-${parentId}`).value = '';
+                    loadCommunityFeed();
+                    updateStats();
+                    showToast("Reply posted!");
+                } catch (e) {
+                    showToast("Error posting reply", true);
+                }
+            };
+            
+            document.getElementById('postCommentBtn')?.addEventListener('click', async () => {
+                const name = document.getElementById('commentName').value.trim() || "NinjaFan";
+                const msg = document.getElementById('commentMsg').value.trim();
+                if (!msg) {
+                    showToast("Write a comment", true);
+                    return;
+                }
+                try {
+                    await supabaseClient.from('comments').insert([{ 
+                        name: name, 
+                        text: msg, 
+                        created_at: new Date(), 
+                        pinned: false 
+                    }]);
+                    document.getElementById('commentMsg').value = '';
+                    loadCommunityFeed();
+                    updateStats();
+                    showToast("Comment posted!");
+                } catch (e) {
+                    showToast("Error posting comment", true);
+                }
+            });
+            
+            document.getElementById('sendMsgBtn')?.addEventListener('click', async () => {
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const message = document.getElementById('contactMsg').value;
+                if (!name || !email || !message) {
+                    showToast("Fill all fields", true);
+                    return;
+                }
+                try {
+                    await supabaseClient.from('contact_messages').insert([{ 
+                        name: name, 
+                        email: email, 
+                        message: message, 
+                        created_at: new Date(), 
+                        is_read: false 
+                    }]);
+                    showToast("Message sent! We'll respond soon.");
+                    document.getElementById('contactName').value = '';
+                    document.getElementById('contactEmail').value = '';
+                    document.getElementById('contactMsg').value = '';
+                } catch (e) {
+                    showToast("Error sending message", true);
+                }
+            });
+            
+            async function updateStats() {
+                try {
+                    const { count: commentCount, error } = await supabaseClient
+                        .from('comments')
+                        .select('*', { count: 'exact', head: true });
+                    if (!error && commentCount) {
+                        const statComments = document.querySelector('.stat-card .stat-number[data-target="12750"]');
+                        if (statComments) statComments.innerText = commentCount.toLocaleString();
+                    }
+                } catch (e) {
+                    console.error("Stats update error:", e);
+                }
+            }
+            
+            // Animated counters
+            const counters = document.querySelectorAll('.stat-number');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        startCounters();
+                        counterObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.2 });
+            if (counters.length) counterObserver.observe(document.querySelector('#statsGrid'));
+            
+            function startCounters() {
+                counters.forEach(c => {
+                    const target = parseInt(c.getAttribute('data-target'));
+                    let current = 0;
+                    const step = target / 70;
+                    const update = () => {
+                        current += step;
+                        if (current < target) {
+                            c.innerText = Math.floor(current);
+                            requestAnimationFrame(update);
+                        } else {
+                            c.innerText = target.toLocaleString();
+                        }
+                    };
+                    update();
+                });
+            }
+            
+            // Fade animations
+            const fadeElements = document.querySelectorAll('.fade-up');
+            const fadeObs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('appear');
+                        fadeObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeElements.forEach(el => fadeObs.observe(el));
+            
+            // FAQ accordion
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Mobile menu
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinksDiv = document.getElementById('navLinks');
+            menuToggle?.addEventListener('click', () => navLinksDiv.classList.toggle('active'));
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => navLinksDiv.classList.remove('active'));
+            });
+            
+            function startApp() {
+                console.log("🚀 Starting application...");
+                loadCommunityFeed();
+                updateStats();
+                
+                // Setup realtime subscription
+                if (supabaseClient) {
+                    supabaseClient.channel('public:comments')
+                        .on('postgres_changes', { event: '*', schema: 'public', table: 'comments' }, 
+                        () => { 
+                            console.log("🔄 Realtime update");
+                            loadCommunityFeed(); 
+                            updateStats(); 
+                        })
+                        .subscribe();
+                }
+            }
+            
+            // Start initialization
+            initSupabase();
+        })();
+    </script>
+</body>
+
+</html>

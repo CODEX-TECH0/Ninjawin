@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NinjaWin | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+        
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, #0A0F0A 0%, #050505 100%);
+            z-index: -2;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+        }
+        /* Admin Header */
+        
+        .admin-header {
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid #00E676;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .admin-header h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, #00E676);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Sidebar */
+        
+        .admin-sidebar {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 230, 118, 0.3);
+        }
+        
+        .admin-tab {
+            background: transparent;
+            border: 1px solid #00E676;
+            color: #00E676;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 600;
+        }
+        
+        .admin-tab.active,
+        .admin-tab:hover {
+            background: #00E676;
+            color: #050505;
+        }
+        /* Buttons */
+        
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: scale(1.02);
+        }
+        
+        .btn-warning {
+            background: #f59e0b;
+            color: black;
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        
+        .btn-warning:hover {
+            background: #d97706;
+            transform: scale(1.02);
+        }
+        
+        .btn-primary {
+            background: #00E676;
+            color: #050505;
+            padding: 12px 28px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #39FF14;
+            transform: scale(1.02);
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        /* Cards */
+        
+        .admin-card {
+            background: rgba(16, 16, 16, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+        
+        .stats-grid {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 28px;
+            padding: 25px;
+            text-align: center;
+            border-left: 4px solid #00E676;
+            transition: 0.2s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #39FF14;
+            text-shadow: 0 0 10px #00E676;
+        }
+        
+        .message-item {
+            background: #0a0f0a;
+            padding: 18px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border-left: 3px solid #00E676;
+            transition: 0.2s;
+        }
+        
+        .message-item:hover {
+            background: #0f1510;
+            transform: translateX(5px);
+        }
+        /* Login Container */
+        
+        .login-container {
+            max-width: 450px;
+            margin: 100px auto;
+            background: rgba(16, 16, 16, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 40px;
+            padding: 45px;
+            border: 1px solid #00E676;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .login-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #00E676);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .login-container input {
+            background: #1a1f1a;
+            border: 1px solid #00E676;
+            border-radius: 20px;
+            padding: 14px 18px;
+            color: white;
+            width: 100%;
+            margin-bottom: 20px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .login-container input:focus {
+            border-color: #39FF14;
+            box-shadow: 0 0 10px #00E676;
+        }
+        
+        textarea,
+        input {
+            background: #1a1f1a;
+            border: 1px solid #00E676;
+            border-radius: 20px;
+            padding: 12px 18px;
+            color: white;
+            width: 100%;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        
+        textarea:focus,
+        input:focus {
+            border-color: #39FF14;
+            box-shadow: 0 0 10px #00E676;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #00E676;
+            color: #050505;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            z-index: 2000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .badge-pinned {
+            background: #00E676;
+            color: #050505;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+        
+        .action-buttons {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #050505;
+            border-top-color: #00E676;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <!-- Login Container -->
+    <div id="loginContainer" class="login-container">
+        <h1><i class="fas fa-crown"></i> NinjaWin Admin</h1>
+        <p style="margin-bottom: 25px; color: #aaa;">Enter your Supabase Auth credentials</p>
+        <input type="email" id="loginEmail" placeholder="Admin Email" value="okpalachimaobi55@gmail.com">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button id="loginBtn" class="btn-primary" style="width:100%;"><i class="fas fa-arrow-right"></i> Login</button>
+        <div id="errorMsg" class="error-message"></div>
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #666;">Only users in 'admins' table can access</p>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboardContent" style="display:none;">
+        <div class="admin-header">
+            <div class="container">
+                <h1><i class="fas fa-crown"></i> NinjaWin | Admin Control Center</h1>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="admin-sidebar">
+                <button class="admin-tab active" data-tab="dashboard"><i class="fas fa-chart-line"></i> Dashboard</button>
+                <button class="admin-tab" data-tab="comments"><i class="fas fa-comments"></i> Comments</button>
+                <button class="admin-tab" data-tab="messages"><i class="fas fa-envelope"></i> Messages</button>
+                <button class="admin-tab" data-tab="announcements"><i class="fas fa-bullhorn"></i> Announcements</button>
+                <button id="logoutBtn" class="btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+
+            <div id="dashboardTab">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalComments">0</div>
+                        <p><i class="fas fa-comment"></i> Total Comments</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalReplies">0</div>
+                        <p><i class="fas fa-reply-all"></i> Total Replies</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalMessages">0</div>
+                        <p><i class="fas fa-envelope"></i> Contact Messages</p>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalPinned">0</div>
+                        <p><i class="fas fa-thumbtack"></i> Pinned Posts</p>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    <div id="recentActivity">Loading...</div>
+                </div>
+            </div>
+
+            <div id="commentsTab" style="display:none;">
+                <div class="admin-card">
+                    <button id="refreshCommentsBtn" class="btn-primary" style="margin-bottom:20px;"><i class="fas fa-sync-alt"></i> Refresh Comments</button>
+                    <div id="adminCommentsList"></div>
+                </div>
+            </div>
+
+            <div id="messagesTab" style="display:none;">
+                <div class="admin-card">
+                    <div id="messagesList"></div>
+                </div>
+            </div>
+
+            <div id="announcementsTab" style="display:none;">
+                <div class="admin-card">
+                    <h3><i class="fas fa-edit"></i> Post New Announcement</h3>
+                    <textarea id="announcementText" rows="3" placeholder="Write announcement..."></textarea>
+                    <button id="postAnnouncementBtn" class="btn-primary"><i class="fas fa-paper-plane"></i> Post Announcement</button>
+                </div>
+                <div class="admin-card">
+                    <h3><i class="fas fa-list"></i> Previous Announcements</h3>
+                    <div id="announcementsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- Load Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = "https://udceaaccnnsgwsnntkfs.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkY2VhYWNjbm5zZ3dzbm50a2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMDU0ODcsImV4cCI6MjA5Njc4MTQ4N30.ZO04OY28I9gg0apVBbEwPc_gFa26jMTlOR8KMp2KZjg";
+
+        let supabaseClient = null;
+        let currentAdmin = null;
+
+        function showToast(message, isError) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.backgroundColor = isError ? '#dc2626' : '#00E676';
+            toast.style.color = isError ? '#fff' : '#050505';
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Initialize Supabase
+        function initSupabase() {
+            if (typeof supabase !== 'undefined' && supabase.createClient) {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log("✅ Supabase initialized");
+                checkSession();
+                return true;
+            } else {
+                console.log("⏳ Waiting for Supabase...");
+                setTimeout(initSupabase, 100);
+                return false;
+            }
+        }
+
+        // Check if user is already logged in
+        async function checkSession() {
+            try {
+                const {
+                    data: {
+                        session
+                    },
+                    error
+                } = await supabaseClient.auth.getSession();
+                if (error) throw error;
+
+                if (session) {
+                    const {
+                        data: adminData
+                    } = await supabaseClient
+                        .from('admins')
+                        .select('*')
+                        .eq('email', session.user.email)
+                        .single();
+
+                    if (adminData) {
+                        currentAdmin = session.user.email;
+                        document.getElementById('loginContainer').style.display = 'none';
+                        document.getElementById('dashboardContent').style.display = 'block';
+                        loadAllData();
+                        showToast("Welcome back, " + currentAdmin);
+                    }
+                }
+            } catch (e) {
+                console.error("Session check error:", e);
+            }
+        }
+
+        // Login handler
+        document.getElementById('loginBtn').addEventListener('click', async function() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('errorMsg');
+
+            errorDiv.style.display = 'none';
+
+            if (!email || !password) {
+                errorDiv.innerHTML = 'Please enter both email and password';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Disable button and show loading
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Logging in...';
+
+            try {
+                // Try to sign in
+                const {
+                    data,
+                    error
+                } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    errorDiv.innerHTML = 'Login failed: ' + error.message;
+                    errorDiv.style.display = 'block';
+                    showToast(error.message, true);
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    return;
+                }
+
+                // Check if user is admin
+                const {
+                    data: adminData,
+                    error: adminError
+                } = await supabaseClient
+                    .from('admins')
+                    .select('*')
+                    .eq('email', email)
+                    .single();
+
+                if (adminError || !adminData) {
+                    errorDiv.innerHTML = 'You are not authorized as an admin.';
+                    errorDiv.style.display = 'block';
+                    showToast("Not authorized", true);
+                    await supabaseClient.auth.signOut();
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    return;
+                }
+
+                // Success!
+                currentAdmin = email;
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('dashboardContent').style.display = 'block';
+                loadAllData();
+                showToast("Welcome " + email);
+
+            } catch (e) {
+                errorDiv.innerHTML = 'Error: ' + e.message;
+                errorDiv.style.display = 'block';
+                showToast(e.message, true);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async function() {
+            await supabaseClient.auth.signOut();
+            location.reload();
+        });
+
+        // Load all dashboard data
+        async function loadAllData() {
+            await loadStats();
+            await loadComments();
+            await loadMessages();
+            await loadAnnouncements();
+        }
+
+        async function loadStats() {
+            try {
+                const {
+                    data: comments
+                } = await supabaseClient.from('comments').select('*');
+                const {
+                    data: messages
+                } = await supabaseClient.from('contact_messages').select('*');
+
+                const replies = (comments || []).filter(c => c.parent_id);
+                const pinned = (comments || []).filter(c => c.pinned);
+
+                document.getElementById('totalComments').innerText = comments ? comments.length : 0;
+                document.getElementById('totalReplies').innerText = replies.length;
+                document.getElementById('totalMessages').innerText = messages ? messages.length : 0;
+                document.getElementById('totalPinned').innerText = pinned.length;
+
+                let html = '';
+                const recent = (comments || []).slice(0, 5);
+                for (let i = 0; i < recent.length; i++) {
+                    html += `<div class="message-item">
+                        <i class="fas fa-comment"></i> <strong>${escapeHtml(recent[i].name)}</strong>: ${escapeHtml(recent[i].text.substring(0, 100))}
+                        <br><small style="color:#666;">${new Date(recent[i].created_at).toLocaleString()}</small>
+                    </div>`;
+                }
+                document.getElementById('recentActivity').innerHTML = html || '<p>No recent activity</p>';
+            } catch (e) {
+                console.error("Stats error:", e);
+            }
+        }
+
+        async function loadComments() {
+            try {
+                const {
+                    data: comments
+                } = await supabaseClient
+                    .from('comments')
+                    .select('*')
+                    .order('created_at', {
+                        ascending: false
+                    });
+
+                let html = '';
+                for (let i = 0; i < (comments || []).length; i++) {
+                    const c = comments[i];
+                    html += `<div class="message-item">
+                        <div>
+                            <strong><i class="fas fa-user"></i> ${escapeHtml(c.name)}</strong>
+                            ${c.parent_id ? '<span style="color:#f59e0b;"> (Reply)</span>' : '<span style="color:#00E676;"> (Comment)</span>'}
+                            ${c.pinned ? '<span class="badge-pinned"><i class="fas fa-thumbtack"></i> PINNED</span>' : ''}
+                        </div>
+                        <div style="margin-top: 8px;">${escapeHtml(c.text)}</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 8px;">${new Date(c.created_at).toLocaleString()}</div>
+                        <div class="action-buttons">
+                            <button onclick="deleteComment('${c.id}')" class="btn-warning"><i class="fas fa-trash"></i> Delete</button>
+                            <button onclick="togglePin('${c.id}', ${!c.pinned})" class="btn-primary"><i class="fas fa-thumbtack"></i> ${c.pinned ? 'Unpin' : 'Pin'}</button>
+                        </div>
+                    </div>`;
+                }
+                document.getElementById('adminCommentsList').innerHTML = html || '<p>No comments found</p>';
+            } catch (e) {
+                console.error("Comments error:", e);
+            }
+        }
+
+        window.deleteComment = async function(id) {
+            if (confirm('Delete this comment permanently?')) {
+                await supabaseClient.from('comments').delete().eq('id', id);
+                loadAllData();
+                showToast("Comment deleted");
+            }
+        };
+
+        window.togglePin = async function(id, pinState) {
+            await supabaseClient.from('comments').update({
+                pinned: pinState
+            }).eq('id', id);
+            loadAllData();
+            showToast(pinState ? "Comment pinned" : "Comment unpinned");
+        };
+
+        async function loadMessages() {
+            try {
+                const {
+                    data: messages
+                } = await supabaseClient
+                    .from('contact_messages')
+                    .select('*')
+                    .order('created_at', {
+                        ascending: false
+                    });
+
+                let html = '';
+                for (let i = 0; i < (messages || []).length; i++) {
+                    const m = messages[i];
+                    html += `<div class="message-item">
+                        <div><strong>${escapeHtml(m.name)}</strong> <span style="color:#aaa;">(${escapeHtml(m.email)})</span></div>
+                        <div style="margin-top: 8px;">${escapeHtml(m.message)}</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 8px;">${new Date(m.created_at).toLocaleString()}</div>
+                    </div>`;
+                }
+                document.getElementById('messagesList').innerHTML = html || '<p>No messages yet</p>';
+            } catch (e) {
+                console.error("Messages error:", e);
+            }
+        }
+
+        async function loadAnnouncements() {
+            try {
+                const {
+                    data: comments
+                } = await supabaseClient
+                    .from('comments')
+                    .select('*')
+                    .eq('pinned', true)
+                    .order('created_at', {
+                        ascending: false
+                    });
+
+                let html = '';
+                for (let i = 0; i < (comments || []).length; i++) {
+                    const c = comments[i];
+                    html += `<div class="message-item">
+                        <div><strong><i class="fas fa-bullhorn"></i> ${escapeHtml(c.name)}</strong></div>
+                        <div style="margin-top: 8px;">${escapeHtml(c.text)}</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 8px;">${new Date(c.created_at).toLocaleString()}</div>
+                    </div>`;
+                }
+                document.getElementById('announcementsList').innerHTML = html || '<p>No announcements yet</p>';
+            } catch (e) {
+                console.error("Announcements error:", e);
+            }
+        }
+
+        document.getElementById('postAnnouncementBtn').addEventListener('click', async function() {
+            const text = document.getElementById('announcementText').value.trim();
+            if (!text) {
+                showToast("Write announcement content", true);
+                return;
+            }
+            await supabaseClient.from('comments').insert([{
+                name: '📢 Admin Announcement',
+                text: text,
+                pinned: true,
+                created_at: new Date()
+            }]);
+            document.getElementById('announcementText').value = '';
+            loadAllData();
+            showToast("Announcement posted!");
+        });
+
+        document.getElementById('refreshCommentsBtn').addEventListener('click', function() {
+            loadComments();
+        });
+
+        // Tab switching
+        const tabs = document.querySelectorAll('.admin-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                document.getElementById('dashboardTab').style.display = 'none';
+                document.getElementById('commentsTab').style.display = 'none';
+                document.getElementById('messagesTab').style.display = 'none';
+                document.getElementById('announcementsTab').style.display = 'none';
+
+                const tabName = this.getAttribute('data-tab');
+                if (tabName === 'dashboard') {
+                    document.getElementById('dashboardTab').style.display = 'block';
+                    loadStats();
+                } else if (tabName === 'comments') {
+                    document.getElementById('commentsTab').style.display = 'block';
+                    loadComments();
+                } else if (tabName === 'messages') {
+                    document.getElementById('messagesTab').style.display = 'block';
+                    loadMessages();
+                } else if (tabName === 'announcements') {
+                    document.getElementById('announcementsTab').style.display = 'block';
+                    loadAnnouncements();
+                }
+            });
+        });
+
+        // Start the app
+        initSupabase();
+    </script>
+</body>
+
+</html>
